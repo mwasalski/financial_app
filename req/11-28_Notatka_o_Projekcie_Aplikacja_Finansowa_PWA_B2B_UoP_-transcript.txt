@@ -1,0 +1,17 @@
+
+00:00:00 
+Teraz ta apka finansowa, zacznijmy od tego, że apka powinna mieć na samym początku dwa, to powinna być zwykła apka, pexe, ale otwierana w przeglądarce, bazą danych, no to niech będzie jakiś plik lokalny na razie, bo teraz nie mam czasu zajmować się tym, żeby to było w chmurze, też to nie jest jakiś mój priorytet.
+00:00:35 
+No i teraz tak, apka, chodź tu Askar, chodź tu, apka bardziej dla polskich ludzi, więc tutaj byłoby... Podzielenie tego na B2B i na UOP, no i to by było wybieralne, jeżeli ktoś podaje UOP, no to wtedy wpisuje ile po prostu dostaje miesięcznie netto i tyle i to by było jako przychód, a jeżeli ktoś jest na B2B, no to wtedy na przykład daje wystawione faktury i to się miesięcznie sumuje, oczywiście netto, żeby nie było VAT-u, bo podatek sobie rozliczy.
+00:01:25 
+Znaczy wpisze w dalszych polach. Można też jeszcze do B2B dodać, można też dodać stawkę godzinową, tak jak ja mam na przykład, więc wpisuję stawkę godzinową razy ilość godzin i to mi po prostu usumuje. Oster, chodź tutaj, chodź tu do mnie, możesz chwilę poczekać. Najważniejsza funkcjonalność to by była taka, że jeżeli ja wpisuję, że w tym miesiącu mam taki przychód, no to podaję stawkę np. ZUS-u, to dla mnie jest 1300 zł i to jest jako mój wydatek.
+00:02:14 
+No i też podaję procent, który płacę podatku, czyli jeżeli jestem na ryczałcie, no to płacę 12%, więc po prostu wpisuję te 12% no i apka automatycznie oblicza ile zostanie mi mojego netto z netto, czyli to co mogę wydać. I teraz tak, oczywiście planowanie wydatków, no to to jest jedno, czyli jak będę dodawał wydatki, no to to po prostu będzie odejścia.
+00:02:48 
+Zajmowało od tego netto, które mam. W jednej zakładce powinna być strona osobna, która by pozwalała na wpisanie rzeczy, które są płatne miesięcznie, jak np. jakieś abonamenty i wybieranie, których miesięcy to dotyczy. Czyli jeżeli mam np. leasing auta, to wprowadzam, że leasing będę płacił do lipca 2026, no i ta kwota, którą wpiszę, ma być w polu co miesiąc stałych wydatków.
+00:03:29 
+I teraz bardzo ważna, czy najważniejsza funkcjonalność to jest taka, że każdy miesiąc jest tak jakby osobno, więc ja mogę sobie planować miesięcznie, np. co kupię. I musi to wpływać na następne miesiące, czyli jeżeli w styczniu mam przychodu 20 tysięcy, wydaję 15 tysięcy, planowo, no to w lutym mam mieć dostęp do, jeżeli moja wypłata jest.
+00:04:01 
+20 tysięcy nesto miesięcznie, to mam mieć 20 tysięcy do wydania plus to, co mi zostało z poprzedniego miesiąca, czy z poprzednich miesięcy, więc jeżeli, wydając, znaczy zarabiając 20 tysięcy miesięcznie, w styczniu zostanie mi 5 tysięcy, przejdzie to na luty, czyli mam w lutym do dyspozycji 25 tysięcy, wydam 15 z tego, no to.
+00:04:33 
+w marcu będę miał netto do dyspozycji 20 tysięcy, pracy, czy tam z faktur plus 10 tysięcy, które mi zostały z poprzednich miesięcy.

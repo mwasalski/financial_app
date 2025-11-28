@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Finansowy planner B2B/UoP</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="page-header">
+    <div class="branding">
+      <div class="logo-dot"></div>
+      <div>
+        <p class="eyebrow">MVP PWA</p>
+        <h1>Finansowy planer dla B2B i UoP</h1>
+        <p class="lede">Oblicz realne netto, zaplanuj stałe wydatki i przenieś niewykorzystane środki na kolejny miesiąc.</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="resetStateBtn" type="button">Wyczyść dane</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card wide">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Profil</p>
+          <h2>Typ rozliczenia</h2>
+        </div>
+        <p class="hint">Dane zapisują się lokalnie w przeglądarce.</p>
+      </div>
+      <div class="mode-switch">
+        <label class="pill">
+          <input type="radio" name="mode" value="uop" id="modeUop">
+          <span>UoP</span>
+        </label>
+        <label class="pill">
+          <input type="radio" name="mode" value="b2b" id="modeB2b">
+          <span>B2B</span>
+        </label>
+      </div>
+      <div class="mode-grid">
+        <div class="card light">
+          <h3>UoP</h3>
+          <label class="field">
+            <span>Miesięczne netto (PLN)</span>
+            <input type="number" id="uopNet" min="0" step="100" placeholder="np. 8000">
+          </label>
+        </div>
+        <div class="card light">
+          <h3>B2B</h3>
+          <div class="two-col">
+            <label class="field">
+              <span>ZUS miesięcznie (PLN)</span>
+              <input type="number" id="b2bZus" min="0" step="10" placeholder="np. 1300">
+            </label>
+            <label class="field">
+              <span>Podatek (%)</span>
+              <input type="number" id="b2bTax" min="0" max="50" step="0.5" placeholder="np. 12">
+            </label>
+          </div>
+          <label class="field">
+            <span>Stawka godzinowa (PLN)</span>
+            <input type="number" id="b2bHourlyRate" min="0" step="10" placeholder="np. 120">
+          </label>
+          <form id="addHoursForm" class="inline-form">
+            <div>
+              <label class="field">
+                <span>Liczba godzin w miesiącu</span>
+                <input type="number" name="hours" min="0" step="1" required>
+              </label>
+              <label class="field">
+                <span>Miesiąc</span>
+                <input type="month" name="month" required>
+              </label>
+            </div>
+            <button type="submit">Dodaj godziny</button>
+          </form>
+          <form id="addInvoiceForm" class="inline-form">
+            <div>
+              <label class="field">
+                <span>Kwota faktury netto (PLN)</span>
+                <input type="number" name="amount" min="0" step="100" required>
+              </label>
+              <label class="field">
+                <span>Opis</span>
+                <input type="text" name="label" maxlength="80" placeholder="np. Faktura ACME">
+              </label>
+              <label class="field">
+                <span>Miesiąc</span>
+                <input type="month" name="month" required>
+              </label>
+            </div>
+            <button type="submit">Dodaj fakturę</button>
+          </form>
+          <div id="b2bEntries" class="entry-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Wydatki</p>
+          <h2>Stałe i jednorazowe</h2>
+        </div>
+        <p class="hint">Stałe wydatki obowiązują od startu do końcowej daty.</p>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>Stałe</h3>
+          <form id="addRecurringForm" class="inline-form">
+            <div>
+              <label class="field">
+                <span>Nazwa</span>
+                <input type="text" name="name" required maxlength="80" placeholder="np. Leasing auta">
+              </label>
+              <label class="field">
+                <span>Kwota (PLN)</span>
+                <input type="number" name="amount" min="0" step="10" required>
+              </label>
+              <div class="two-col">
+                <label class="field">
+                  <span>Start</span>
+                  <input type="month" name="startMonth" required>
+                </label>
+                <label class="field">
+                  <span>Koniec</span>
+                  <input type="month" name="endMonth" required>
+                </label>
+              </div>
+            </div>
+            <button type="submit">Dodaj stały wydatek</button>
+          </form>
+          <div id="recurringList" class="entry-list"></div>
+        </div>
+        <div>
+          <h3>Jednorazowe</h3>
+          <form id="addOneTimeForm" class="inline-form">
+            <div>
+              <label class="field">
+                <span>Nazwa</span>
+                <input type="text" name="name" required maxlength="80" placeholder="np. Laptop">
+              </label>
+              <label class="field">
+                <span>Kwota (PLN)</span>
+                <input type="number" name="amount" min="0" step="10" required>
+              </label>
+              <label class="field">
+                <span>Miesiąc</span>
+                <input type="month" name="month" required>
+              </label>
+            </div>
+            <button type="submit">Dodaj wydatek</button>
+          </form>
+          <div id="oneTimeList" class="entry-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Budżet</p>
+          <h2>Rollover i bilans miesięczny</h2>
+        </div>
+        <p class="hint">Saldo niewykorzystane w danym miesiącu przechodzi dalej.</p>
+      </div>
+      <div id="summaryHeader" class="summary-header"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Miesiąc</th>
+              <th>Przychód</th>
+              <th>Wydatki</th>
+              <th>Nadwyżka przeniesiona</th>
+            </tr>
+          </thead>
+          <tbody id="summaryTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Offline ready • Dane tylko lokalnie • MVP bez chmury</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
