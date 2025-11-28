@@ -1,4 +1,8 @@
 const STORAGE_KEY = "financial-app-state-v1";
+const FILE_NAME = "budget.json";
+let storageMode = "local";
+let directoryHandle = null;
+let fileHandle = null;
 
 const monthKey = (date = new Date()) => {
   const year = date.getFullYear();
@@ -52,8 +56,24 @@ function loadState() {
   }
 }
 
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+async function saveState() {
+  const payload = JSON.stringify(state);
+  // Always keep localStorage as fallback cache.
+  localStorage.setItem(STORAGE_KEY, payload);
+
+  if (storageMode === "file" && fileHandle) {
+    try {
+      const writable = await fileHandle.createWritable();
+      await writable.write(new Blob([payload], { type: "application/json" }));
+      await writable.close();
+      updateStorageStatus(`Zapis: plik ${FILE_NAME} w wybranym folderze`);
+      return;
+    } catch (err) {
+      console.warn("Nie udało się zapisać do pliku, wracam do localStorage", err);
+      storageMode = "local";
+    }
+  }
+  updateStorageStatus("Zapis: localStorage (domyślnie)");
 }
 
 function formatCurrency(value) {
@@ -323,6 +343,41 @@ function setupInputs() {
     state = defaultState();
     renderAll();
   });
+
+  document.getElementById("chooseFolderBtn").addEventListener("click", async () => {
+    if (!window.showDirectoryPicker) {
+      alert("Ta przeglądarka nie wspiera natywnego zapisu do folderu. Użyj nowszego Chrome/Edge lub eksportu pliku.");
+      return;
+    }
+    try {
+      directoryHandle = await window.showDirectoryPicker({ id: "financial-app-data" });
+      fileHandle = await directoryHandle.getFileHandle(FILE_NAME, { create: true });
+      storageMode = "file";
+      await saveState();
+    } catch (err) {
+      console.warn("Wybór folderu przerwany lub odrzucony", err);
+    }
+  });
+
+  const importInput = document.getElementById("importInput");
+  document.getElementById("importBtn").addEventListener("click", () => importInput.click());
+  importInput.addEventListener("change", async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const next = JSON.parse(text);
+      state = next;
+      storageMode = "local";
+      renderAll();
+      alert("Zaimportowano dane z pliku (zapis lokalny). Aby zapisywać dalej do pliku, wybierz folder.");
+    } catch (err) {
+      alert("Nie udało się wczytać pliku JSON.");
+      console.error(err);
+    } finally {
+      importInput.value = "";
+    }
+  });
 }
 
 function registerServiceWorker() {
@@ -335,6 +390,12 @@ function init() {
   setupInputs();
   renderAll();
   registerServiceWorker();
+  updateStorageStatus("Zapis: localStorage (domyślnie)");
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+function updateStorageStatus(text) {
+  const el = document.getElementById("storageStatus");
+  if (el) el.textContent = text;
+}
